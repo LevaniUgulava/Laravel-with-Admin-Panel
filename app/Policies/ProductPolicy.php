@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Product;
+use App\Models\User;
+
+class ProductPolicy
+{
+
+    public function before(User $user)
+    {
+        if ('admin' === $user->role) {
+            return true;
+        }
+    }
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return 'operator' === $user->role;
+    }
+
+    public function viewSome(User $user): bool
+    {
+        return 'redactor' === $user->role;
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, Product $product): bool
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, Product $product): bool
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, Product $product): bool
+    {
+
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
+    public function restore(User $user, Product $product): bool
+    {
+        //
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDelete(User $user, Product $product): bool
+    {
+        //
+    }
+}
