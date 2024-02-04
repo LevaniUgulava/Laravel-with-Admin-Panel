@@ -76,3 +76,14 @@ Route::delete('/profile/delete/{id}', [ProfileController::class, 'destroy'])->na
 Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
 
 Route::post('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+
+Route::get('/password/reset', [UserController::class, 'resetview'])->name('reset');
+
+Route::post('/password', [UserController::class, 'reset'])->name('reset.pass');
+
+Route::get('/password/{token}/{email}', [UserController::class, 'resetpass'])->name('password.reset');
+
+// Route::get('/passwordchange', [UserController::class, 'viewchange']);
+Route::post('password/change/{id}', [UserController::class, 'change']);
+
+Route::post('/logout', [UserController::class, 'logout']);

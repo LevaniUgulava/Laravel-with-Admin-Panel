@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Added;
+use App\Mail\ResetPassword;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,9 +82,58 @@ class UserController extends Controller
 
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/main');
+    }
+
     public function notice()
     {
         return view('verification.notice');
+    }
+
+    public function resetview()
+    {
+        return view('auth.passwordreset');
+    }
+
+    public function reset(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        $this->mail($user);
+
+        return redirect()->back();
+
+    }
+
+    protected function mail($user)
+    {
+        $url = route('password.reset', ['token' => $user->verification_token, 'email' => $user->email]);
+
+        Mail::to($user->email)->send(new ResetPassword($url));
+    }
+
+    public function resetpass($token, $email)
+    {
+        $user = User::where('verification_token', $token)
+            ->where('email', $email)
+            ->first();
+
+        if ($user) {
+            return view('changepassword', compact('user'));
+        } else {
+            return abort(403);
+        }
+
+    }
+    public function change(Request $request, $id)
+    {
+        $user = User::findorfail($id);
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->back();
     }
 
 }

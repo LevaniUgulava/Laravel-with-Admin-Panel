@@ -22,15 +22,14 @@
             width: 300px;
         }
 
-        label, input, button {
+        label, input {
             display: block;
             margin-bottom: 10px;
         }
 
         input[type="text"],
         input[type="email"],
-        input[type="password"],
-        button {
+        input[type="password"] {
             width: calc(100% - 22px); /* Adjusted for padding and borders */
             padding: 8px;
             border-radius: 3px;
@@ -41,10 +40,26 @@
             background-color: #007bff;
             color: #fff;
             cursor: pointer;
+            width: calc(100% - 22px);
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #007bff;
         }
 
         button:hover {
             background-color: #0056b3;
+            border: 1px solid #0056b3;
+        }
+
+        .links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: #007bff;
         }
     </style>
 </head>
@@ -68,12 +83,10 @@
                 <input type="password" id="password" name="password" required>
             </div>
 
-
             <button type="submit">Register</button>
         </form>
-        <button>        <a href="{{url('/main')}}">Back</a>
-</button>
 
+            <a href="{{url('/main')}}">Back</a>
     </div>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Form</title>
+    <title>Password Reset</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,14 +22,12 @@
             width: 300px;
         }
 
-        label, input, button, .message {
+        label, input {
             display: block;
             margin-bottom: 10px;
         }
 
-        input[type="email"],
-        input[type="password"],
-        button {
+        input[type="email"] {
             width: calc(100% - 22px); /* Adjusted for padding and borders */
             padding: 8px;
             border-radius: 3px;
@@ -40,60 +38,44 @@
             background-color: #007bff;
             color: #fff;
             cursor: pointer;
+            width: calc(100% - 22px);
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #007bff;
         }
 
         button:hover {
             background-color: #0056b3;
+            border: 1px solid #0056b3;
         }
 
-        .back-link {
-            text-align: center;
+        .links {
             margin-top: 10px;
+            text-align: center;
         }
 
-        .back-link a {
+        .links a {
             text-decoration: none;
             color: #007bff;
-        }
-
-        .forgot-password {
-            text-align: right;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Password Reset</h2>
+        <form method="POST" action="{{route('reset.pass')}}">
+            @csrf
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-@if(session()->has('message'))
-    <div class="message">
-        {{ session('message') }}
-    </div>
-@endif
+            <button type="submit">Reset Password</button>
+        </form>
 
-<div class="container">
-    <h2>Login Form</h2>
-    <form method="POST" action="{{url('/loginn')}}">
-        @csrf
-        <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+        <div class="links">
+            <a href="{{url('/main')}}">Back to Main</a>
         </div>
-
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-
-        <button type="submit">Login</button>
-    </form>
-
-    <div class="back-link">
-        <a href="{{url('/main')}}">Back</a>
     </div>
-
-    <div class="forgot-password">
-        <a href="{{route('reset')}}">Forgot Password?</a>
-    </div>
-</div>
-
 </body>
 </html>
