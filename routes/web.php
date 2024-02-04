@@ -81,7 +81,7 @@ Route::get('/password/reset', [UserController::class, 'resetview'])->name('reset
 
 Route::post('/password', [UserController::class, 'reset'])->name('reset.pass');
 
-Route::get('/password/{token}/{email}', [UserController::class, 'resetpass'])->name('password.reset');
+Route::get('/password/{token}/{email}', [UserController::class, 'resetpass'])->name('password.reset')->middleware('signed');
 
 // Route::get('/passwordchange', [UserController::class, 'viewchange']);
 Route::post('password/change/{id}', [UserController::class, 'change']);

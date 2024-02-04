@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -109,8 +110,8 @@ class UserController extends Controller
 
     protected function mail($user)
     {
-        $url = route('password.reset', ['token' => $user->verification_token, 'email' => $user->email]);
 
+        $url = URL::temporarySignedRoute('password.reset', now()->addSeconds(30), ['token' => $user->verification_token, 'email' => $user->email]);
         Mail::to($user->email)->send(new ResetPassword($url));
     }
 
